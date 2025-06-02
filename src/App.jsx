@@ -1,27 +1,33 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/login";
+import Logout from "./pages/logout";
 import Register from "./pages/register";
 import Home from "./pages/home";
-import Logout from "./pages/logout";
+import ProtectedRoutes from "./ProtectedRoutes";
+import Layout from "./Layout";
 
 function App() {
   const [count, setCount] = useState(0);
-  const isAuthenticated = !!localStorage.getItem("token");
+  // const isAuthenticated = !!localStorage.getItem("token");
 
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
+        {/* Rotas públicas */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route
-          path="/"
-          element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
-        />
+
+        {/* Rotas protegidas */}
+        <Route element={<ProtectedRoutes />}>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/logout" element={<Logout />} />
+          </Route>
+        </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 

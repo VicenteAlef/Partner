@@ -32,7 +32,7 @@ function Layout() {
         </Link>
       </header>
 
-      <main className="bg-gray-300 px-[10%] py-20">
+      <main className="bg-gray-100 px-[10%] py-20">
         <Outlet /> {/* Aqui muda o conteúdo */}
       </main>
 
